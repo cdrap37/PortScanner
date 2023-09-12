@@ -1,0 +1,27 @@
+import socket
+
+target_host = "infosecdraper.com"
+target_ports = [80, 443, 22, 21,20,53,23,25,3389,445,3306,110,161,67,68]  # List of ports to scan
+
+def port_scanner(target_host, port):
+    try:
+        # Create a socket object
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        # Set a timeout
+        socket.setdefaulttimeout(1)
+        
+        # Attempt to connect to the target host and port
+        client.connect((target_host, port))
+        
+        # If successful, the port is open
+        print(f"Port {port}/TCP is open.")
+        
+        # Close the socket
+        client.close()
+        
+    except (socket.timeout, ConnectionRefusedError):
+        pass  # Port is closed or unreachable
+
+for port in target_ports:
+    port_scanner(target_host, port)
